@@ -137,4 +137,3 @@ export default class DeviceInfoScreen extends React.Component {
     )
   }
 }
-
