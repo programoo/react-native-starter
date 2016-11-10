@@ -17,6 +17,8 @@ class GeolocationScreen extends React.Component {
   state = {
     initialPosition: 'unknown',
     lastPosition: 'unknown',
+    lat: 0.0,
+    lng: 0.0
   };
 
   watchID: ? number = null;
@@ -32,7 +34,13 @@ class GeolocationScreen extends React.Component {
     );
     this.watchID = navigator.geolocation.watchPosition((position) => {
       var lastPosition = JSON.stringify(position);
-      this.setState({lastPosition});
+      var lastPositionJSON = JSON.parse(lastPosition);
+
+      var coords = position.coords;
+
+      console.log('LastPositionJSON: ' + position.coords.latitude);
+
+      this.setState({lastPosition, lat: position.coords.latitude, lng: position.coords.longitude});
     });
   }
 
@@ -66,6 +74,10 @@ class GeolocationScreen extends React.Component {
             <Text style={styles.subtitle} >
               All components that register examples will be rendered below:
               {this.state.lastPosition}
+              LAT HERE
+              {this.state.lat}
+              LNG
+              {this.state.lng}
             </Text>
           </View>
         </ScrollView>
