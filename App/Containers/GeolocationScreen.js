@@ -100,6 +100,19 @@ class GeolocationScreen extends React.Component {
               {this.state.formattedAddress}
             </Text>
           </View>
+
+
+          <View style={styles.cardContainer}>
+            <Text style={styles.cardTitle}>{'myGeocloder'.toUpperCase()}</Text>
+            <View key={'streetName'} style={styles.rowContainer}>
+              <View style={styles.rowLabelContainer}>
+                <Text style={styles.rowLabel}>{'streetName'}</Text>
+              </View>
+              <View style={styles.rowInfoContainer}>
+                <Text style={styles.rowInfo}>{'Sukhumvit'}</Text>
+              </View>
+            </View>
+          </View>
         </ScrollView>
       </View>
     )
