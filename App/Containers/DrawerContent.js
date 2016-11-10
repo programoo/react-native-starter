@@ -60,7 +60,7 @@ class DrawerContent extends Component {
         <DrawerButton text='API Testing' onPress={this.handlePressAPI} />
         <DrawerButton text='Themes' onPress={this.handlePressTheme} />
         <DrawerButton text='Device Info' onPress={this.handlePressDevice} />
-        <DrawerButton text='GeolocationDrawerContent.js' onPress={this.handlePressGeolocation} />
+        <DrawerButton text='Geolocation Sidebar' onPress={this.handlePressGeolocation} />
       </ScrollView>
     )
   }

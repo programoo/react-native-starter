@@ -45,7 +45,7 @@ export default class PresentationScreen extends React.Component {
           </RoundedButton>
 
           <RoundedButton onPress={NavigationActions.myGeolocation}>
-            Geolocation Presentation Screen
+            Geolocation MainMenu
           </RoundedButton>
 
           <View style={styles.centered}>

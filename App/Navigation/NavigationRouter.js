@@ -39,7 +39,7 @@ class NavigationRouter extends Component {
             <Scene key='apiTesting' component={APITestingScreen} title='API Testing' />
             <Scene key='theme' component={ThemeScreen} title='Theme' />
             <Scene key='deviceInfo' component={DeviceInfoScreen} title='Device Info' />
-            <Scene key='myGeolocation' component={GeolocationScreen} title='GeolocationNavigationRouter.js' />
+            <Scene key='myGeolocation' component={GeolocationScreen} title='GeolocationScreen' />
           </Scene>
         </Scene>
       </Router>

@@ -106,28 +106,9 @@ class GeolocationScreen extends React.Component {
       <View style={styles.mainContainer}>
         <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
         <ScrollView style={styles.container}>
-          <View style={styles.section}>
-            {this.renderAndroidWarning()}
-
-            <Text style={styles.sectionText}>
-              GeolocationScreen
-            </Text>
-            <Text style={styles.subtitle} >
-              All components that register examples will be rendered below:
-              {this.state.lastPosition}
-              LAT HERE
-              {this.state.lat}
-              LNG
-              {this.state.lng}
-              FORMATTED_ADDRESS
-              {this.state.formattedAddress}
-            </Text>
-          </View>
-
-          <TimeAgo time={this.state.timestamp} />
 
           <View style={styles.cardContainer}>
-            <Text style={styles.cardTitle}>{'myGeocloder'.toUpperCase()}</Text>
+            <Text style={styles.cardTitle}>{'GeocoderInfo'.toUpperCase()}</Text>
 
             <View style={styles.rowContainer}>
               <View style={styles.rowLabelContainer}>
