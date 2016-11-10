@@ -1,121 +1,30 @@
 // An All Components Screen is a great way to dev and quick-test components
 import React from 'react'
-import { View, ScrollView, Text, Image, NetInfo } from 'react-native'
-import DeviceInfo from 'react-native-device-info'
-import { Metrics, Images } from '../Themes'
-import { map, fromPairs } from 'ramda'
-import styles from './Styles/DeviceInfoScreenStyle'
+import { Platform, View, ScrollView, Text, Image } from 'react-native'
+import { Images } from '../Themes'
+import styles from './Styles/GeolocationScreenStyle'
 
-const HARDWARE_DATA = [
-  {title: 'Device Manufacturer', info: DeviceInfo.getManufacturer()},
-  {title: 'Device Name', info: DeviceInfo.getDeviceName()},
-  {title: 'Device Model', info: DeviceInfo.getModel()},
-  {title: 'Device Unique ID', info: DeviceInfo.getUniqueID()},
-  {title: 'Device Locale', info: DeviceInfo.getDeviceLocale()},
-  {title: 'Device Country', info: DeviceInfo.getDeviceCountry()},
-  {title: 'User Agent', info: DeviceInfo.getUserAgent()},
-  {title: 'Screen Width', info: Metrics.screenWidth},
-  {title: 'Screen Height', info: Metrics.screenHeight}
-]
+// Components to show examples (only real point of merge conflict)
+import '../Components/AlertMessage'
+import '../Components/FullButton'
+import '../Components/RoundedButton'
+import '../Components/DrawerButton'
+// import '../Components/MapCallout'
+// Examples Render Engine
+import ExamplesRegistry from '../Services/ExamplesRegistry'
 
-const OS_DATA = [
-  {title: 'Device System Name', info: DeviceInfo.getSystemName()},
-  {title: 'Device ID', info: DeviceInfo.getDeviceId()},
-  {title: 'Device Version', info: DeviceInfo.getSystemVersion()}
-]
+class GeolocationScreen extends React.Component {
 
-const APP_DATA = [
-  {title: 'Bundle Id', info: DeviceInfo.getBundleId()},
-  {title: 'Build Number', info: DeviceInfo.getBuildNumber()},
-  {title: 'App Version', info: DeviceInfo.getVersion()},
-  {title: 'App Version (Readable)', info: DeviceInfo.getReadableVersion()}
-]
-
-export default class DeviceInfoScreen extends React.Component {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      isConnected: false,
-      connectionInfo: null,
-      connectionInfoHistory: []
-    }
-
-    this.setConnected = this.setConnected.bind(this)
-    this.setConnectionInfo = this.setConnectionInfo.bind(this)
-    this.updateConnectionInfoHistory = this.updateConnectionInfoHistory.bind(this)
-  }
-
-  componentDidMount () {
-    NetInfo.isConnected.addEventListener('change', this.setConnected)
-    NetInfo.isConnected.fetch().done(this.setConnected)
-    NetInfo.addEventListener('change', this.setConnectionInfo)
-    NetInfo.fetch().done(this.setConnectionInfo)
-    NetInfo.addEventListener('change', this.updateConnectionInfoHistory)
-
-    // an example of how to display a custom Reactotron message
-    console.tron.display({
-      name: 'SPECS',
-      value: {
-        hardware: fromPairs(map((o) => [o.title, o.info], HARDWARE_DATA)),
-        os: fromPairs(map((o) => [o.title, o.info], OS_DATA)),
-        app: fromPairs(map((o) => [o.title, o.info], APP_DATA))
-      },
-      preview: 'About this device...'
-    })
-  }
-
-  componentWillUnmount () {
-    NetInfo.isConnected.removeEventListener('change', this.setConnected)
-    NetInfo.removeEventListener('change', this.setConnectionInfo)
-    NetInfo.removeEventListener('change', this.updateConnectionInfoHistory)
-  }
-
-  setConnected (isConnected) {
-    this.setState({isConnected})
-  }
-
-  setConnectionInfo (connectionInfo) {
-    this.setState({connectionInfo})
-  }
-
-  updateConnectionInfoHistory (connectionInfo) {
-    const connectionInfoHistory = this.state.connectionInfoHistory.slice()
-    connectionInfoHistory.push(connectionInfo)
-    this.setState({connectionInfoHistory})
-  }
-
-  netInfo () {
-    return ([
-      {title: 'Connection', info: (this.state.isConnected ? 'Online' : 'Offline')},
-      {title: 'Connection Info', info: this.state.connectionInfo},
-      {title: 'Connection Info History', info: JSON.stringify(this.state.connectionInfoHistory)}
-    ])
-  }
-
-  renderCard (cardTitle, rowData) {
-    return (
-      <View style={styles.cardContainer}>
-        <Text style={styles.cardTitle}>{cardTitle.toUpperCase()}</Text>
-        {this.renderRows(rowData)}
-      </View>
-    )
-  }
-
-  renderRows (rowData) {
-    return rowData.map((cell) => {
-      const {title, info} = cell
+  renderAndroidWarning () {
+    if (Platform.OS === 'android') {
       return (
-        <View key={title} style={styles.rowContainer}>
-          <View style={styles.rowLabelContainer}>
-            <Text style={styles.rowLabel}>{title}</Text>
-          </View>
-          <View style={styles.rowInfoContainer}>
-            <Text style={styles.rowInfo}>{info}</Text>
-          </View>
-        </View>
+        <Text style={styles.sectionText}>
+          Android only: Animations are slow? You are probably running the app in debug mode.
+          It will run more smoothly once your app will be built.
+        </Text>
       )
-    })
+    }
+    return null
   }
 
   render () {
@@ -124,16 +33,21 @@ export default class DeviceInfoScreen extends React.Component {
         <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
         <ScrollView style={styles.container}>
           <View style={styles.section}>
-            <Text style={styles.sectionText} >
-              Dedicated to identifying specifics of the device.  All info useful for identifying outlying behaviour specific to a device.
+            {this.renderAndroidWarning()}
+            <Text style={styles.sectionText}>
+              GeolocationScreen.js
+            </Text>
+            <Text style={styles.subtitle} >
+              All components that register examples will be rendered below:
             </Text>
           </View>
-          {this.renderCard('Device Hardware', HARDWARE_DATA)}
-          {this.renderCard('Device OS', OS_DATA)}
-          {this.renderCard('App Info', APP_DATA)}
-          {this.renderCard('Net Info', this.netInfo())}
+
+          {ExamplesRegistry.render()}
+
         </ScrollView>
       </View>
     )
   }
 }
+
+export default GeolocationScreen
