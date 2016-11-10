@@ -11,11 +11,13 @@ import '../Components/RoundedButton'
 import '../Components/DrawerButton'
 
 import Geocoder from 'react-native-geocoder';
+import TimeAgo from 'react-native-timeago';
 
 class GeolocationScreen extends React.Component {
   state = {
     initialPosition: 'unknown',
     lastPosition: 'unknown',
+    timestamp: '0',
     lat: 0.0,
     lng: 0.0,
     streetName: '',
@@ -34,6 +36,8 @@ class GeolocationScreen extends React.Component {
 
   componentDidMount() {
     var GEOCOER_API_KEY = 'AIzaSyDv2VpqmZMncx534XuPreVaDcVGFV5jyGw';
+    var timestamp = "2015-06-21T06:24:44.124Z";
+
     Geocoder.fallbackToGoogle(GEOCOER_API_KEY);
 
     navigator.geolocation.getCurrentPosition(
@@ -64,6 +68,7 @@ class GeolocationScreen extends React.Component {
         this.setState({lastPosition,
           lat: position.coords.latitude,
           lng: position.coords.longitude,
+          timestamp: position.timestamp,
           streetName: res[0].streetName,
           locality: res[0].locality,
           adminArea: res[0].adminArea,
@@ -119,8 +124,19 @@ class GeolocationScreen extends React.Component {
             </Text>
           </View>
 
+          <TimeAgo time={this.state.timestamp} />
+
           <View style={styles.cardContainer}>
             <Text style={styles.cardTitle}>{'myGeocloder'.toUpperCase()}</Text>
+
+            <View style={styles.rowContainer}>
+              <View style={styles.rowLabelContainer}>
+                <Text style={styles.rowLabel}>{'timestamp'}</Text>
+              </View>
+              <View style={styles.rowInfoContainer}>
+                <TimeAgo style={styles.rowInfo} time={this.state.timestamp} />
+              </View>
+            </View>
 
             <View style={styles.rowContainer}>
               <View style={styles.rowLabelContainer}>
