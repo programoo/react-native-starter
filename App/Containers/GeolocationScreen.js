@@ -18,7 +18,16 @@ class GeolocationScreen extends React.Component {
     lastPosition: 'unknown',
     lat: 0.0,
     lng: 0.0,
-    formattedAddress: 'unknown'
+    streetName: '',
+    locality: '',
+    adminArea: '',
+    streetNumber: '',
+    country: '',
+    countryCode: '',
+    postalCode: '',
+    subAdminArea: '',
+    subLocality: '',
+    formattedAddress: ''
   };
 
   watchID: ? number = null;
@@ -55,6 +64,15 @@ class GeolocationScreen extends React.Component {
         this.setState({lastPosition,
           lat: position.coords.latitude,
           lng: position.coords.longitude,
+          streetName: res[0].streetName,
+          locality: res[0].locality,
+          adminArea: res[0].adminArea,
+          streetNumber: res[0].streetNumber,
+          country: res[0].country,
+          countryCode: res[0].countryCode,
+          postalCode: res[0].postalCode,
+          subAdminArea: res[0].subAdminArea,
+          subLocality: res[0].subLocality,
           formattedAddress: res[0].formattedAddress
         });
 
@@ -101,17 +119,126 @@ class GeolocationScreen extends React.Component {
             </Text>
           </View>
 
-
           <View style={styles.cardContainer}>
             <Text style={styles.cardTitle}>{'myGeocloder'.toUpperCase()}</Text>
-            <View key={'streetName'} style={styles.rowContainer}>
+
+            <View style={styles.rowContainer}>
+              <View style={styles.rowLabelContainer}>
+                <Text style={styles.rowLabel}>{'formattedAddress'}</Text>
+              </View>
+              <View style={styles.rowInfoContainer}>
+                <Text style={styles.rowInfo}>{this.state.formattedAddress}</Text>
+              </View>
+            </View>
+
+            <View style={styles.rowContainer}>
+              <View style={styles.rowLabelContainer}>
+                <Text style={styles.rowLabel}>{'lat'}</Text>
+              </View>
+              <View style={styles.rowInfoContainer}>
+                <Text style={styles.rowInfo}>{this.state.lat}</Text>
+              </View>
+            </View>
+
+            <View style={styles.rowContainer}>
+              <View style={styles.rowLabelContainer}>
+                <Text style={styles.rowLabel}>{'lng'}</Text>
+              </View>
+              <View style={styles.rowInfoContainer}>
+                <Text style={styles.rowInfo}>{this.state.lng}</Text>
+              </View>
+            </View>
+
+            <View style={styles.rowContainer}>
               <View style={styles.rowLabelContainer}>
                 <Text style={styles.rowLabel}>{'streetName'}</Text>
               </View>
               <View style={styles.rowInfoContainer}>
-                <Text style={styles.rowInfo}>{'Sukhumvit'}</Text>
+                <Text style={styles.rowInfo}>{this.state.streetName}</Text>
               </View>
             </View>
+
+            <View style={styles.rowContainer}>
+              <View style={styles.rowLabelContainer}>
+                <Text style={styles.rowLabel}>{'locality'}</Text>
+              </View>
+              <View style={styles.rowInfoContainer}>
+                <Text style={styles.rowInfo}>{this.state.locality}</Text>
+              </View>
+            </View>
+
+            <View style={styles.rowContainer}>
+              <View style={styles.rowLabelContainer}>
+                <Text style={styles.rowLabel}>{'adminArea'}</Text>
+              </View>
+              <View style={styles.rowInfoContainer}>
+                <Text style={styles.rowInfo}>{this.state.adminArea}</Text>
+              </View>
+            </View>
+
+            <View style={styles.rowContainer}>
+              <View style={styles.rowLabelContainer}>
+                <Text style={styles.rowLabel}>{'streetNumber'}</Text>
+              </View>
+              <View style={styles.rowInfoContainer}>
+                <Text style={styles.rowInfo}>{this.state.streetNumber}</Text>
+              </View>
+            </View>
+
+            <View style={styles.rowContainer}>
+              <View style={styles.rowLabelContainer}>
+                <Text style={styles.rowLabel}>{'country'}</Text>
+              </View>
+              <View style={styles.rowInfoContainer}>
+                <Text style={styles.rowInfo}>{this.state.country}</Text>
+              </View>
+            </View>
+
+            <View style={styles.rowContainer}>
+              <View style={styles.rowLabelContainer}>
+                <Text style={styles.rowLabel}>{'countryCode'}</Text>
+              </View>
+              <View style={styles.rowInfoContainer}>
+                <Text style={styles.rowInfo}>{this.state.countryCode}</Text>
+              </View>
+            </View>
+
+            <View style={styles.rowContainer}>
+              <View style={styles.rowLabelContainer}>
+                <Text style={styles.rowLabel}>{'postalCode'}</Text>
+              </View>
+              <View style={styles.rowInfoContainer}>
+                <Text style={styles.rowInfo}>{this.state.postalCode}</Text>
+              </View>
+            </View>
+
+            <View style={styles.rowContainer}>
+              <View style={styles.rowLabelContainer}>
+                <Text style={styles.rowLabel}>{'subAdminArea'}</Text>
+              </View>
+              <View style={styles.rowInfoContainer}>
+                <Text style={styles.rowInfo}>{this.state.subAdminArea}</Text>
+              </View>
+            </View>
+
+            <View style={styles.rowContainer}>
+              <View style={styles.rowLabelContainer}>
+                <Text style={styles.rowLabel}>{'subLocality'}</Text>
+              </View>
+              <View style={styles.rowInfoContainer}>
+                <Text style={styles.rowInfo}>{this.state.subLocality}</Text>
+              </View>
+            </View>
+
+            <View style={styles.rowContainer}>
+              <View style={styles.rowLabelContainer}>
+                <Text style={styles.rowLabel}>{'subAdminArea'}</Text>
+              </View>
+              <View style={styles.rowInfoContainer}>
+                <Text style={styles.rowInfo}>{this.state.subAdminArea}</Text>
+              </View>
+            </View>
+
           </View>
         </ScrollView>
       </View>
