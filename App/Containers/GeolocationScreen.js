@@ -14,6 +14,31 @@ import '../Components/DrawerButton'
 import ExamplesRegistry from '../Services/ExamplesRegistry'
 
 class GeolocationScreen extends React.Component {
+  state = {
+    initialPosition: 'unknown',
+    lastPosition: 'unknown',
+  };
+
+  watchID: ? number = null;
+
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        var initialPosition = JSON.stringify(position);
+        this.setState({initialPosition});
+      },
+      (error) => alert(JSON.stringify(error)),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
+    this.watchID = navigator.geolocation.watchPosition((position) => {
+      var lastPosition = JSON.stringify(position);
+      this.setState({lastPosition});
+    });
+  }
+
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchID);
+  }
 
   renderAndroidWarning () {
     if (Platform.OS === 'android') {
@@ -34,16 +59,15 @@ class GeolocationScreen extends React.Component {
         <ScrollView style={styles.container}>
           <View style={styles.section}>
             {this.renderAndroidWarning()}
+
             <Text style={styles.sectionText}>
               GeolocationScreen.js
             </Text>
             <Text style={styles.subtitle} >
               All components that register examples will be rendered below:
+              {this.state.lastPosition}
             </Text>
           </View>
-
-          {ExamplesRegistry.render()}
-
         </ScrollView>
       </View>
     )
