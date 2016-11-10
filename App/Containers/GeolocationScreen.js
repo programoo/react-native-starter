@@ -45,16 +45,13 @@ class GeolocationScreen extends React.Component {
 
       this.setState({lastPosition, lat: position.coords.latitude, lng: position.coords.longitude});
 
-      // CURRENT_LOCATION = {lat: position.coords.latitude, lng: position.coords.longitude}
-      // Geocoder.geocodePosition(CURRENT_LOCATION).then(res => {
-      //   var values = JSON.stringify(res)
-      //   console.log(values);
-      // }).catch(err => console.log(err))
+      CURRENT_LOCATION = {lat: position.coords.latitude, lng: position.coords.longitude};
 
-
+      Geocoder.geocodePosition(CURRENT_LOCATION).then(res => {
+        var values = JSON.stringify(res);
+        console.log('geocodePosition' + values);
+      }).catch(err => console.log(err))
     });
-
-
   }
 
   componentWillUnmount() {
