@@ -17,7 +17,8 @@ class GeolocationScreen extends React.Component {
     initialPosition: 'unknown',
     lastPosition: 'unknown',
     lat: 0.0,
-    lng: 0.0
+    lng: 0.0,
+    formattedAddress: 'unknown'
   };
 
   watchID: ? number = null;
@@ -50,6 +51,13 @@ class GeolocationScreen extends React.Component {
       Geocoder.geocodePosition(CURRENT_LOCATION).then(res => {
         var values = JSON.stringify(res);
         console.log('geocodePosition' + values);
+
+        this.setState({lastPosition,
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+          formattedAddress: res[0].formattedAddress
+        });
+
       }).catch(err => console.log(err))
     });
   }
@@ -79,7 +87,7 @@ class GeolocationScreen extends React.Component {
             {this.renderAndroidWarning()}
 
             <Text style={styles.sectionText}>
-              GeolocationScreen.js
+              GeolocationScreen
             </Text>
             <Text style={styles.subtitle} >
               All components that register examples will be rendered below:
@@ -88,6 +96,8 @@ class GeolocationScreen extends React.Component {
               {this.state.lat}
               LNG
               {this.state.lng}
+              FORMATTED_ADDRESS
+              {this.state.formattedAddress}
             </Text>
           </View>
         </ScrollView>
