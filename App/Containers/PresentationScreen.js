@@ -48,6 +48,10 @@ export default class PresentationScreen extends React.Component {
             Geolocation MainMenu
           </RoundedButton>
 
+          <RoundedButton onPress={NavigationActions.myMap}>
+            MAP MainMenu
+          </RoundedButton>
+
           <View style={styles.centered}>
             <Text style={styles.subtitle}>Made with ❤️ by Infinite Red</Text>
           </View>

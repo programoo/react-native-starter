@@ -18,6 +18,7 @@ import APITestingScreen from '../Containers/APITestingScreen'
 import ThemeScreen from '../Containers/ThemeScreen'
 import DeviceInfoScreen from '../Containers/DeviceInfoScreen'
 import GeolocationScreen from '../Containers/GeolocationScreen'
+import MyMapScreen from '../Containers/MyMapScreen'
 
 /* **************************
 * Documentation: https://github.com/aksonov/react-native-router-flux
@@ -40,6 +41,7 @@ class NavigationRouter extends Component {
             <Scene key='theme' component={ThemeScreen} title='Theme' />
             <Scene key='deviceInfo' component={DeviceInfoScreen} title='Device Info' />
             <Scene key='myGeolocation' component={GeolocationScreen} title='GeolocationScreen' />
+            <Scene key='myMap' component={MyMapScreen} title='MyMapScreen' />
           </Scene>
         </Scene>
       </Router>
