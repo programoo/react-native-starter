@@ -10,8 +10,8 @@ import '../Components/FullButton'
 import '../Components/RoundedButton'
 import '../Components/DrawerButton'
 
-import Geocoder from 'react-native-geocoder';
-import TimeAgo from 'react-native-timeago';
+import Geocoder from 'react-native-geocoder'
+import TimeAgo from 'react-native-timeago'
 
 class GeolocationScreen extends React.Component {
   state = {
@@ -30,40 +30,36 @@ class GeolocationScreen extends React.Component {
     subAdminArea: '',
     subLocality: '',
     formattedAddress: ''
-  };
+  }
 
-  watchID: ? number = null;
+  watchID: ? number = null
 
-  componentDidMount() {
-    var GEOCOER_API_KEY = 'AIzaSyDv2VpqmZMncx534XuPreVaDcVGFV5jyGw';
-    var timestamp = "2015-06-21T06:24:44.124Z";
+  componentDidMount () {
+    var GEOCOER_API_KEY = 'AIzaSyDv2VpqmZMncx534XuPreVaDcVGFV5jyGw'
 
-    Geocoder.fallbackToGoogle(GEOCOER_API_KEY);
+    Geocoder.fallbackToGoogle(GEOCOER_API_KEY)
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        var initialPosition = JSON.stringify(position);
-        this.setState({initialPosition});
+        var initialPosition = JSON.stringify(position)
+        this.setState({initialPosition})
       },
-      (error) => alert(JSON.stringify(error)),
+      (error) => console.log(JSON.stringify(error)),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-    );
+    )
 
     this.watchID = navigator.geolocation.watchPosition((position) => {
-      var lastPosition = JSON.stringify(position);
-      var lastPositionJSON = JSON.parse(lastPosition);
+      var lastPosition = JSON.stringify(position)
 
-      var coords = position.coords;
+      console.log('LastPositionJSON: ' + position.coords.latitude)
 
-      console.log('LastPositionJSON: ' + position.coords.latitude);
+      this.setState({lastPosition, lat: position.coords.latitude, lng: position.coords.longitude})
 
-      this.setState({lastPosition, lat: position.coords.latitude, lng: position.coords.longitude});
-
-      CURRENT_LOCATION = {lat: position.coords.latitude, lng: position.coords.longitude};
+      var CURRENT_LOCATION = {lat: position.coords.latitude, lng: position.coords.longitude}
 
       Geocoder.geocodePosition(CURRENT_LOCATION).then(res => {
-        var values = JSON.stringify(res);
-        console.log('geocodePosition' + values);
+        var values = JSON.stringify(res)
+        console.log('geocodePosition' + values)
 
         this.setState({lastPosition,
           lat: position.coords.latitude,
@@ -79,14 +75,13 @@ class GeolocationScreen extends React.Component {
           subAdminArea: res[0].subAdminArea,
           subLocality: res[0].subLocality,
           formattedAddress: res[0].formattedAddress
-        });
-
+        })
       }).catch(err => console.log(err))
-    });
+    })
   }
 
-  componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.watchID);
+  componentWillUnmount () {
+    navigator.geolocation.clearWatch(this.watchID)
   }
 
   renderAndroidWarning () {

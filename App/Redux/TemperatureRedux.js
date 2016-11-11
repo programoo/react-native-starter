@@ -29,7 +29,6 @@ export const request = (state, { city }) =>
 
 // successful temperature lookup
 export const success = (state, action) => {
-  //debugger;
   const { temperature } = action
   return state.merge({ fetching: false, error: null, temperature })
 }
